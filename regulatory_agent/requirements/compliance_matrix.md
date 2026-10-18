@@ -1,0 +1,74 @@
+# Regulatory Compliance Analysis: 24m Civilian Autonomous Submarine
+**Operational Domain:** Port of Göteborg (Fairways, Archipelagic Waters, and Kattegat Approaches)  
+**Regulatory Frameworks:** IMO MASS Code (Interim & Emerging Mandatory), COLREGs (1972), SOLAS (Chapters II-1, II-2, IV, V), EU Directives & Swedish National Regulations (Transportstyrelsen / VTS Göteborg), NATO Standards (STANAGs / Waterspace Management), and Classification Rules (DNV-RU-UUV / LR UMS).
+
+---
+
+### Regulatory Assessment Summary
+
+Operating a 24m civilian autonomous submarine within the confined, heavily trafficked waters of the Port of Göteborg presents a dual-domain operational challenge:
+1. **Surface Navigation (Surfaced / Semi-submerged):** Full accountability under COLREGs, SOLAS Chapter V navigation carriage requirements, EU Vessel Traffic Monitoring Directive (2002/59/EC), and local harbour bylaws enforced by VTS Göteborg.
+2. **Subsurface Navigation (Fully Submerged):** Strict Waterspace Management (WSM) and Prevention of Mutual Interference (PMI) based on NATO standards (STANAG 4817, ATP-10 / ANEP-104), deep-water acoustic clearing, and DNV/LR submerged pressure hull and life-safety criteria.
+
+The table below sets forth all functional, architectural, operational, and safety requirements derived for the design and deployment lifecycle.
+
+---
+
+### Comprehensive Compliance Requirements Table
+
+| Req ID | Regulation/Standard | Requirement Title | Description | Target Project Stage |
+| :--- | :--- | :--- | :--- | :--- |
+| **REQ-MASS-001** | IMO MSC.1/Circ.1638 / Non-Mandatory MASS Code | MASS Autonomy Degree Allocation | The platform must support transitions between Degree 2 (Remotely controlled with seafarers onboard/fallback) and Degree 3 (Remotely controlled without seafarers), with dynamic fallback to Degree 4 (Fully autonomous fail-safe sequence) upon link loss. | System Architecture |
+| **REQ-MASS-002** | IMO MASS Code (Goal-Based) / MSC.1/Circ.1638 | Remote Operations Centre (ROC) Human-System Interface | The ROC operator interface must provide situational awareness equivalence to bridge conning positions, presenting fused sensor tracks, vessel dynamics, and environmental data within 200ms latency. | UI/Digital Twin (Lovable) |
+| **REQ-MASS-003** | IMO MASS Code (Safe Fallback) | Minimal Risk Condition (MRC) & Safe State | If primary telemetry (C2 link) and autonomous collision avoidance fail concurrently, the vessel must execute a controlled dive-abort, surface using passive/positive buoyancy, and anchor or hold station outside main fairways. | SysML Modeling (SysON) |
+| **REQ-MASS-004** | IMO MASS Code / DNV-CG-0264 | C2 Link Redundancy & Continuity | Communications architecture must maintain dual-redundant, encrypted command and control links: 5G/LTE coastal network while surfaced/snorkeling in Göteborg harbour and dual-satellite (LEO/GEO) link combined with acoustic communications underwater. | System Architecture |
+| **REQ-MASS-005** | IMO MASS Code / MSC.1/Circ.1638 | Dynamic Situational Awareness (DSA) Verification | Automated target tracking and classification algorithms must achieve continuous object detection probabilities $\ge 99.5\%$ within a 3.0 NM horizon using mast electro-optical/infrared (EO/IR) and marine radar. | Integrated MASS Demonstrator |
+| **REQ-COLR-001** | COLREGs Rule 2 & 5 | Equivalent Look-Out Compliance | While surfaced or semi-submerged, visual and auditory watchkeeping must be replicated using a $360^\circ$ panoramic mast-mounted optical/thermal sensor array combined with hydrophone/acoustic array listeners for sound signals. | Concept Design (FreeCAD) |
+| **REQ-COLR-002** | COLREGs Rule 6 | Safe Speed Optimization in Archipelagic Waters | Dynamic speed controller must restrict operational speed to $\le 8$ knots within Göteborg harbour channels (Tångudden to Älvsborg) and dynamically compute safe stopping distance relative to draught, trim, and river flow. | Requirements Derivation |
+| **REQ-COLR-003** | COLREGs Rule 8 & 16 | Action to Avoid Collision (Early and Substantial) | Autonomous steering algorithms must calculate avoidance trajectories that produce an unambiguous, measurable aspect change of at least $30^\circ$ course deviation or $50\%$ speed reduction evident to observed vessels. | SysML Modeling (SysON) |
+| **REQ-COLR-004** | COLREGs Rule 9 | Narrow Channel Conformance (Göta Älv / Torshamnen) | The submarine must keep as near to the outer limit of the fairway on her starboard side as is safe and practicable, and must never cross or impede large container vessels, car carriers, or tankers navigating the Port of Göteborg fairways. | Regulatory Analysis |
+| **REQ-COLR-005** | COLREGs Rule 10 | Traffic Separation Scheme (TSS) In Kattegat Compliance | When navigating the TSS "In the Approaches to Göteborg", the submarine must proceed in the general direction of traffic flow, join/leave at termination points or small angles, and never anchor within separation zones. | SysML Modeling (SysON) |
+| **REQ-COLR-006** | COLREGs Rule 18 | Responsibilities Between Vessels (Constrained Maneuvering) | While semi-submerged or performing high-ballast trimming operations, the vessel must broadcast Restricted in Ability to Maneuver (RAM) status and prioritize stand-on rights of sailing vessels and deep-draught commercial traffic. | Requirements Derivation |
+| **REQ-COLR-007** | COLREGs Rule 23 & Submarine Addenda | Amber Flashing Mast Identification Light | While operating on the surface or at periscope depth, the submarine must exhibit an all-round intermittent amber/yellow flashing light (90–105 flashes/min) visible at $\ge 3$ NM, in addition to standard Masthead, Sidelights, and Sternlight. | Concept Design (FreeCAD) |
+| **REQ-COLR-008** | COLREGs Rule 27 | Shapes and Lights Display (RAM and Submerged Profile) | Retractable mast must be equipped with compliant vertical LED arrays displaying Red-White-Red lights by night, and Ball-Diamond-Ball shapes (or high-intensity digital shape representation) by day when maneuverability is restricted. | Visualization (Blender) |
+| **REQ-COLR-009** | COLREGs Rule 34 & 35 | Acoustic Sound Signals in Restricted Visibility | An omnidirectional acoustic foghorn mast projector must emit standardized sound signals (e.g., one prolonged blast every 2 minutes when underway making way) automatically triggered during degraded visual visibility ($< 2$ NM). | System Architecture |
+| **REQ-SOLAS-001** | SOLAS Ch. II-1 / Part B-2 | Submersible Subdivision and Damage Stability | Pressure hull and external free-flooding hydrodynamic superstructure must satisfy two-compartment damage stability criteria; remaining reserve buoyancy must guarantee positive stability at all surfacing trim conditions. | Concept Design (FreeCAD) |
+| **REQ-SOLAS-002** | SOLAS Ch. II-2 / Reg. 4 & 5 | Li-Ion Battery Energy Storage Safety & Fire Containment | The 24m vessel's battery storage system (ESS) must be encapsulated in gas-tight, liquid-cooled, Class A-60 insulated compartments equipped with automated aerosol/water-mist suppression and inert gas purging systems. | System Architecture |
+| **REQ-SOLAS-003** | SOLAS Ch. IV / Reg. 7 | GMDSS Automated Buoy Delivery System | A release-fail-safe GMDSS emergency position-indicating radio beacon (EPIRB) and bidirectional emergency acoustic communication buoy must deploy automatically if submerged water ingress or catastrophic power failure occurs. | Concept Design (FreeCAD) |
+| **REQ-SOLAS-004** | SOLAS Ch. V / Reg. 19 | Dual-Domain AIS Integration | The platform must carry a certified Class-A AIS transponder linked to surfacing masts, broadcasting dynamic MASS operational status codes and switching to subsurface acoustic data transmission when fully submerged. | Requirements Derivation |
+| **REQ-SOLAS-005** | SOLAS Ch. V / Reg. 19 | Radar System & Target Tracking Carriage | A solid-state X-band maritime radar must be integrated into the retractable sensor mast, providing real-time ARPA/MARPA capabilities interfaced directly with the collision-avoidance system. | System Architecture |
+| **REQ-SOLAS-006** | SOLAS Ch. V / Reg. 19 & 27 | Autonomous Nautical Charts (WECDIS/ECDIS-MASS) | The autonomous navigational system must ingest high-resolution S-57 / S-101 official Electronic Navigation Charts, incorporating dynamic depth soundings for Göteborg port and automated bathymetric safety contours. | UI/Digital Twin (Lovable) |
+| **REQ-SOLAS-007** | SOLAS Ch. V / Reg. 31 & 32 | Danger Messages Automated Reporting | System must autonomously generate and relay urgent maritime safety info (MSI) messages via VHF/satellite upon detecting unmapped navigation hazards, floating obstacles, or significant meteorological anomalies. | SysML Modeling (SysON) |
+| **REQ-EUMS-001** | Directive 2002/59/EC | SafeSeaNet & Port Operational Integration | The submarine ROC must integrate with the Swedish Maritime Administration (Sjöfartsverket) SafeSeaNet portal to pre-notify voyage plans, dangerous cargo, dangerous goods classifications, and estimated arrival/departure. | Regulatory Analysis |
+| **REQ-EUMS-002** | EU Directive 2022/2555 (NIS 2) | Cyber Security Baseline for Autonomous Operators | Communication links, remote control protocols, and onboard flight controllers must comply with NIS 2 critical entity standards, implementing zero-trust network architecture, mutual TLS, and continuous intrusion detection. | System Architecture |
+| **REQ-EUMS-003** | Directive 2014/90/EU (MED) | Marine Equipment Wheelmark Conformance | Autonomous navigation sensors, emergency signaling systems, and power units deployed on the 24m platform must possess valid Marine Equipment Directive (MED) conformity markings or formal class-exemptions. | Requirements Derivation |
+| **REQ-SWE-001** | Transportstyrelsen TSFS / Local Bylaws | VTS Göteborg Mandatory Reporting | System must autonomously handle or prompt ROC operator to execute mandatory VHF voice and digital reporting to "VTS Göteborg" at designated reporting lines (Trindeln, Böttö, Gäveskär, and Knippelholmen). | UI/Digital Twin (Lovable) |
+| **REQ-SWE-002** | Swedish Maritime Law / Sjölagen | Strict Submerged Navigation Restrictions in Inner Waters | Submerged operation is prohibited in the inner Göteborg harbour (east of Älvsborg Bridge). Transition from surfaced to submerged state is strictly confined to designated test corridors west of Vinga under VTS permit. | Regulatory Analysis |
+| **REQ-SWE-003** | Port of Göteborg Port Regulations | Anchorage & Mooring Protocol for Submersibles | The vessel must feature standard automated bollards/deck-cleats and active fender standoff mechanisms to permit safe mooring at conventional surface berths (e.g., Amerikaskjulet or Torshamnen) without specialized drydock facilities. | Concept Design (FreeCAD) |
+| **REQ-NATO-001** | STANAG 4817 (Multi-Domain C2) | Multi-Domain C2 Interoperability Interface | Telemetry, conning messages, and state estimates must conform to standardized UCI (Universal Command and Control Interface) formats to support NATO naval-civil interoperability and shared awareness models. | SysML Modeling (SysON) |
+| **REQ-NATO-002** | ATP-10 / ANEP-104 (WSM/PMI) | Waterspace Management and Mutual Interference Prevention | Fully submerged operations in Kattegat must observe WSM/PMI procedures, utilizing check-in/check-out messages (SUBNOTE), safety boxes, and acoustic transponders to prevent mutual interference with allied naval forces. | Regulatory Analysis |
+| **REQ-NATO-003** | STANAG 4586 / ANEP-77 | Sensor Data Fusion and Dissemination Schema | Optical, sonar, and acoustic tracking data must be formatted to common payload interface specifications, facilitating track fusion inside the ROC and multi-node sharing via secure tactical links. | Integrated MASS Demonstrator |
+| **REQ-NATO-004** | AEP-84 / NATO Sub-Surface Safety | Subsurface Acoustic Ping & Interrogation Transceiver | Submarine must feature a calibrated high-frequency acoustic pinger and underwater telephone (UQC) transponder active during submerged transits to verify position to surface escorts or tracking vessels. | System Architecture |
+| **REQ-CLAS-001** | DNV-RU-UUV Pt.4 Ch.1 / LR UMS | Pressure Hull Shell Stress and Fatigue Compliance | The 24m pressure hull (HY-80 or equivalent titanium/carbon composite) must withstand a nominal working depth of at least 200m with a safety factor $\ge 2.0$ against catastrophic buckling, validated via non-linear FEA. | Concept Design (FreeCAD) |
+| **REQ-CLAS-002** | DNV-CG-0264 / LR Code for UMS | Software Autonomy Safety & Assurance Level | Machine learning-based perception and collision avoidance algorithms must be certified under Software Safety Integrity Level 2 (SIL 2) or equivalent class autonomous notation (e.g., DNV *AUT-X* or LR *AL4*). | Integrated MASS Demonstrator |
+| **REQ-CLAS-003** | DNV-RU-UUV Pt.2 Ch.2 | Submerged Propulsion & Power Redundancy | Submerged propulsion must feature dual independent electric thruster banks and dual battery string isolators to guarantee maneuverability and station keeping following any single electrical point of failure. | System Architecture |
+| **REQ-CLAS-004** | LR Code for UMS / DNV Autonomous Guidelines | Situational Awareness Rendering in Digital Twin | ROC conning system and digital twin must reproduce 3D hydrodynamics, seabed bathymetry, surface vessels, and blind-spot fields of view accurately to within $\pm 0.5$ degrees roll/pitch and 0.1m position accuracy. | UI/Digital Twin (Lovable) |
+| **REQ-VIS-001** | Port of Göteborg Visual Operational Spec | High-Fidelity Photorealistic Visual Asset Definition | Detailed 3D model representing real-time hydrodynamic effects, sensor mast deployments, ballast waterline shifts, and lighting signatures must be produced for simulation, training, and port stakeholder validation. | Visualization (Blender) |
+| **REQ-SYS-001** | INCOSE / ISO 15288 (SysON Model) | Full Requirements & Architecture Traceability Tree | Every functional and safety requirement derived from MASS, COLREGs, SOLAS, and national port directives must have bidirectionally linked operational use cases and structural blocks within the SysML model. | SysML Modeling (SysON) |
+
+---
+
+### Verification and Stage Distribution Summary
+
+```
+Regulatory Analysis           [█████]       4 Reqs
+Requirements Derivation       [█████]       4 Reqs
+SysML Modeling (SysON)        [█████]       5 Reqs
+System Architecture           [████████]    7 Reqs
+Concept Design (FreeCAD)      [██████]      5 Reqs
+Visualization (Blender)       [██]          2 Reqs
+UI/Digital Twin (Lovable)     [████]        4 Reqs
+Integrated MASS Demonstrator  [████]        3 Reqs
+```
+
+This requirements matrix forms the foundational systems engineering compliance baseline for developing the 24m civilian autonomous submarine concept across all engineering, modeling, and operational phases.

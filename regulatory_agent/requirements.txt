@@ -1,0 +1,8 @@
+pip
+setuptools
+wheel
+setuptools-rust
+maturin
+cryptography<=41.0.7
+crewai[google-genai]
+
