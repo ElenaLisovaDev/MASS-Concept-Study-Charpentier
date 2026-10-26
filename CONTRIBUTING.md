@@ -6,40 +6,6 @@ If you're unsure where something belongs, check the table below or ask in the te
 
 ---
 
-## Document header (put this at the top of every document)
-
-Every Markdown document in `docs/` (and any other written deliverable) starts with a **YAML front-matter header**. It gives an at-a-glance overview and tracks the **decide → verify** lifecycle, so anyone can scan a folder and see what's drafted, decided, or verified without opening each file.
-
-Keep it **anonymous**: use **roles**, not personal names or company names (this is a public repo).
-
-```yaml
----
-title: <document title>
-area: <responsibility area, e.g. Remote Operations Concept>
-phase: <project phase, e.g. Phase 2 - Problem Definition>
-status: draft            # draft | in-review | decided | verified
-owner-role: <role responsible, not a person's name>
-decided-by: ""           # role that signed off the decision
-decided-date: ""         # YYYY-MM-DD
-verified-by: ""          # role that verified against requirements
-verified-date: ""        # YYYY-MM-DD
-source: ""               # agent run / meeting / external ref (no personal data)
-summary: >
-  <one or two sentence overview of what this document covers>
----
-```
-
-### Field meaning
-- **status** — the lifecycle state. Move it forward as the work matures: `draft` → `in-review` → `decided` → `verified`.
-- **owner-role / decided-by / verified-by** — always a **role** (e.g. "Systems Engineering", "Regulatory Analysis"), never a name or company.
-- **decided-date / verified-date** — ISO `YYYY-MM-DD`; leave `""` until it happens.
-- **source** — where the content came from (e.g. "regulatory agent run", "2026-11-24 sponsor workshop"). No personal data.
-- **summary** — short enough to read at a glance.
-
-An example is in place at `docs/conops/README.md`. Copy that header into new documents and adjust the fields.
-
----
-
 ## 1. Where things go
 
 Store by **deliverable type**, not by who made it or when. Each folder has its own README describing its contents.
