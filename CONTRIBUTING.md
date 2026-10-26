@@ -30,7 +30,7 @@ Store by **deliverable type**, not by who made it or when. Each folder has its o
 - **One home per artifact.** Don't duplicate the same file into two folders. If two areas need it, keep the source in its type folder and reference it from the other.
 - **Documents (`docs/...`) hold the reviewed, human-owned artifacts.** Models go in `models/`, not in `docs/`.
 - **Don't create new top-level folders** without agreeing with the team first — it fragments the structure.
-- **No personal scratch folders** in the repo (e.g. `henrik-stuff/`). Use your own machine for scratch work; commit only shareable deliverables.
+- **No personal scratch folders** in the repo (e.g. `my-notes/`, `tmp-<initials>/`). Use your own machine for scratch work; commit only shareable deliverables.
 - **Don't commit generated environments or secrets** — `.venv/`, `__pycache__/`, `.env`, and `.kiro/` are already gitignored. Never commit API keys.
 
 ---
@@ -64,10 +64,27 @@ Binary deliverables are tracked with **Git LFS** (see `.gitattributes`): CAD, Bl
 
 Several of us will run AI agents (regulatory, systems engineering, design, UI/UX, documentation). To keep agent output traceable and reviewable:
 
-### Separate raw agent output from reviewed deliverables
-- An agent may **write its raw output next to its own code** (e.g. the regulatory agent writes `regulatory_agent/requirements/compliance_matrix.md`). That's the raw, unreviewed draft.
-- **A human must review it**, then copy the reviewed version into the matching `docs/` deliverable folder (e.g. `docs/regulatory/compliance-matrix.md`). The reviewed copy in `docs/` is the team's source of truth; the raw copy stays with the agent as a reproducible artifact.
-- **Never treat raw agent output as a deliverable.** All AI-generated content must be validated by engineering judgement before it's relied on (this is a project rule, see `project/Agentic-Engineering-Approach.md`).
+### Two-stage flow: raw output → reviewed deliverable
+
+Agent output goes through two defined stages. These are two different locations with two different meanings — not a scratch folder, and not a duplicate.
+
+**Stage 1 — Raw output (lives with the agent).**
+The agent writes its unreviewed draft into its own folder, in a fixed location (e.g. the regulatory agent writes `regulatory_agent/requirements/compliance_matrix.md`; new agents use `<name>_agent/output/`). This is a *reproducible artifact*: re-running the agent regenerates it. It is **not** a deliverable, and other team members should not build on it directly. Committing it is optional — commit it only if you want the raw run to be reproducible/visible; otherwise it can stay local.
+
+**Stage 2 — Reviewed deliverable (lives in `docs/` or `models/`).**
+A human reviews the raw draft, edits/corrects it using engineering judgement, and saves the reviewed result into the matching deliverable folder (e.g. `docs/regulatory/compliance-matrix.md`). **This copy is the single source of truth** — it's what the rest of the team references and what goes into reports.
+
+**Why two places instead of editing in `docs/` directly:**
+- The raw copy stays pristine so you can always see what the agent actually produced and re-run it.
+- The `docs/` copy carries human edits and is safe to depend on.
+- If you edited inside the agent folder, the next agent run would overwrite your work.
+
+**Avoiding drift (important):**
+- Once promoted to `docs/`, **edit only the `docs/` copy**. Don't keep polishing the raw copy — it's a snapshot of a run, not a living document.
+- In the `docs/` file, note which agent run it came from (e.g. a line like `Source: regulatory_agent run on 2026-11-05, reviewed by <initials>`). This keeps traceability without re-syncing files.
+- When you re-run the agent later, treat the new raw output as a *new draft* to diff against the current `docs/` version — review the changes, then update `docs/`. Never blind-overwrite the reviewed deliverable with fresh raw output.
+
+**Never treat raw agent output as a deliverable.** All AI-generated content must be validated by engineering judgement before it's relied on (project rule, see `project/Agentic-Engineering-Approach.md`).
 
 ### Recommended per-agent layout
 When you add a new agent, mirror the regulatory agent's pattern:
