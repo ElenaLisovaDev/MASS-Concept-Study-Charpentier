@@ -6,6 +6,40 @@ If you're unsure where something belongs, check the table below or ask in the te
 
 ---
 
+## Document header (put this at the top of every document)
+
+Every Markdown document in `docs/` (and any other written deliverable) starts with a **YAML front-matter header**. It gives an at-a-glance overview and tracks the **decide → verify** lifecycle, so anyone can scan a folder and see what's drafted, decided, or verified without opening each file.
+
+Keep it **anonymous**: use **roles**, not personal names or company names (this is a public repo).
+
+```yaml
+---
+title: <document title>
+area: <responsibility area, e.g. Remote Operations Concept>
+phase: <project phase, e.g. Phase 2 - Problem Definition>
+status: draft            # draft | in-review | decided | verified
+owner-role: <role responsible, not a person's name>
+decided-by: ""           # role that signed off the decision
+decided-date: ""         # YYYY-MM-DD
+verified-by: ""          # role that verified against requirements
+verified-date: ""        # YYYY-MM-DD
+source: ""               # agent run / meeting / external ref (no personal data)
+summary: >
+  <one or two sentence overview of what this document covers>
+---
+```
+
+### Field meaning
+- **status** — the lifecycle state. Move it forward as the work matures: `draft` → `in-review` → `decided` → `verified`.
+- **owner-role / decided-by / verified-by** — always a **role** (e.g. "Systems Engineering", "Regulatory Analysis"), never a name or company.
+- **decided-date / verified-date** — ISO `YYYY-MM-DD`; leave `""` until it happens.
+- **source** — where the content came from (e.g. "regulatory agent run", "2026-11-24 sponsor workshop"). No personal data.
+- **summary** — short enough to read at a glance.
+
+An example is in place at `docs/conops/README.md`. Copy that header into new documents and adjust the fields.
+
+---
+
 ## 1. Where things go
 
 Store by **deliverable type**, not by who made it or when. Each folder has its own README describing its contents.
@@ -108,7 +142,54 @@ Then the reviewed result is promoted to the relevant `docs/` or `models/` folder
 
 ---
 
-## 5. Git workflow (recap)
+## 5. Privacy — this is a public repo
+
+The repository is **public**. Treat everything you commit — file contents **and** git metadata — as visible to anyone on the internet. Keep personal and company information out of it.
+
+### No personal or company identifiers in content
+- Don't put real names, personal emails, phone numbers, or employer/company names in committed files (code, docs, READMEs, commit messages).
+- Use **roles**, not names: "the regulatory lead", "the repo owner" — not a person's name.
+- Named responsibilities (who owns which area) are decided in a team meeting and kept **off** the public repo (e.g. in a private channel or private doc), not in `TEAM.md` here.
+- Example/scratch names in docs should be generic (`my-notes/`, `tmp-<initials>/`), not a real person's name.
+
+### Keep your identity out of commit metadata
+Every commit records an author name and email that become public on GitHub. Configure git to use your GitHub username and a **noreply** email so your real name / personal email isn't exposed:
+
+```bash
+git config user.name  "<your-github-username>"
+git config user.email "<your-github-username>@users.noreply.github.com"
+```
+
+(Use the exact noreply address from GitHub → Settings → Emails, and enable "Keep my email addresses private". Set this per-repo as above, or globally with `--global`.)
+
+> Note: commits already pushed keep their original author info in history. Rewriting that requires `git filter-repo` plus a force-push, which rewrites shared history for everyone — coordinate with the repo owner before doing it; never force-push `main` unilaterally.
+
+### Before committing, sanity-check
+- Re-read new files for names/companies/keys.
+- No `.env`, keys, or tokens (gitignored, but double-check).
+- To scan tracked files for identifiers:
+  ```bash
+  git grep -I -i -n -E "name1|name2|companyname"
+  ```
+
+---
+
+## 6. Getting an overview of the repo
+
+To see everything that's in the repo at a glance (useful when joining or reviewing):
+
+- **Full list of tracked files:** `git ls-files`
+- **Tree view of tracked files** (grouped by folder): `git ls-tree -r --name-only HEAD`
+- **Folder structure only** (directories): `git ls-files | %{ Split-Path $_ -Parent } | Sort-Object -Unique`  *(PowerShell)*
+- **What changed recently:** `git log --oneline -20`
+- **What's uncommitted right now:** `git status --short --branch`
+- **Where a type of file lives:** e.g. all CAD → `git ls-files "models/cad/**"`
+
+The folder READMEs plus this file describe *what belongs* where; the commands above show *what is actually there*.
+
+---
+
+## 7. Git workflow (recap)
 
 We work directly on `main` (small team). Keep it smooth:
 
@@ -120,7 +201,7 @@ We work directly on `main` (small team). Keep it smooth:
 
 ---
 
-## 6. Quick decision guide
+## 8. Quick decision guide
 
 - "I generated this with an agent." → raw copy stays with the agent; reviewed copy goes to `docs/` or `models/`.
 - "It's a CAD/Blender/image/PDF/Office file." → it's LFS-tracked; just commit it in its type folder.
