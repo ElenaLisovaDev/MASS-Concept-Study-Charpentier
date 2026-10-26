@@ -22,7 +22,7 @@ The full project definition (vision, challenge, workflow, team responsibilities,
 | `presentations/` | Check-in and final-demo decks |
 | `reports/` | Technical reports and formal deliverables |
 
-Each folder has a short README describing what goes in it.
+Each folder has a short README describing what goes in it. **Before adding files, read [`CONTRIBUTING.md`](CONTRIBUTING.md)** — it defines where everything is stored, naming conventions, LFS rules, and how to handle agent output.
 
 ### Large files (Git LFS)
 
