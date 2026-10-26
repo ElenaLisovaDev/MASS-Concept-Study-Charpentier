@@ -18,5 +18,5 @@ Output is written to `requirements/compliance_matrix.md` (overwritten on each ru
 Currently the agent fetches context files (approach, readme, team responsibilities) from `https://github.com/draronnax83-cmd/MASS-Concept-Study-Charpentier`. Those files are now mirrored locally in `../project/` — a future improvement is to read the local copies instead, removing the network dependency and giving a single source of truth.
 
 ## Known issues / TODOs
-- **Scenario mismatch:** the agent prompt currently describes a "24 m civilian submarine in Göteborg harbour", but this study is an **Uncrewed Surface Vessel (USV)**. Update the role/goal/task text in `run_regulatory_agent_crew.py` to the USV scenario before trusting the output.
+- The agent prompt now targets the **Uncrewed Surface Vessel (USV) / MASS** scenario (updated from an earlier submarine template).
 - All AI-generated output must be reviewed by an engineer before use.

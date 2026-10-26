@@ -35,15 +35,15 @@ for name, url in github_files.items():
 # Define agent
 regulatory_analyst = Agent(
     role="Senior Maritime Regulatory Compliance Specialist",
-    goal="Ensure the 24m submarine concept strictly complies with relevant international maritime regulations review, EU regulatory mapping, NATO standards assessment, and MASS guidance.",
-    backstory="You are an expert in international maritime law, cybersecurity, safety management, and class rules (DNV/LR), specializing in autonomous UUVs.",
+    goal="Ensure the concept-level Uncrewed Surface Vessel (USV) / Maritime Autonomous Surface System (MASS) strictly complies with relevant international maritime regulations review, EU regulatory mapping, NATO standards assessment, and MASS guidance.",
+    backstory="You are an expert in international maritime law, cybersecurity, safety management, and class rules (DNV/LR), specializing in autonomous and remotely supervised surface vessels (MASS/USV).",
     verbose=True,
     llm=gemini_llm
 )
 
 # Define Task 
 task_regulatory = Task(
-    description="Analyze 24m civilian submarine operations in Göteborg harbour under IMO MASS Code, COLREGs, SOLAS, EU regulations, and NATO standards based on the provided repository context.",
+    description="Analyze concept-level Uncrewed Surface Vessel (USV) / MASS operations, including autonomous and remotely supervised modes, under the IMO MASS Code, COLREGs, SOLAS, EU regulations, and NATO standards based on the provided repository context.",
     expected_output=(
         "A comprehensive markdown table containing all gathered requirements. "
         "Each requirement must include: Req ID (e.g., REQ-MASS-001), Regulation/Standard, "
