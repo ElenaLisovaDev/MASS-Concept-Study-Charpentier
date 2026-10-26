@@ -1,1 +1,76 @@
 # MASS-Concept-Study-Charpentier
+
+Regulatory compliance study for a 24 m autonomous submarine concept, using a [crewai](https://github.com/crewAIInc/crewAI) agent that analyses maritime regulations (IMO MASS Code, COLREGs, SOLAS, EU regulations, NATO standards) and produces a requirements matrix.
+
+> One-line description above is a placeholder — adjust it to match the study's framing.
+
+## Requirements
+
+- **Python 3.11** (recommended; see `.python-version`). 3.11 is chosen because `requirements.txt` includes `cryptography`, which can be painful to build from source on newer Python.
+- `pip`
+- A Google AI / Gemini API key
+
+## Setup
+
+### macOS / Linux
+```bash
+cd regulatory_agent
+bash setup.sh
+```
+
+### Windows (PowerShell)
+```powershell
+cd regulatory_agent
+.\setup.ps1
+```
+If PowerShell blocks script execution, run this once in the session:
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+Both scripts create a `.venv` (if missing), activate it, install `certifi`, point the SSL bundle paths at it (needed behind the corporate proxy), and install `requirements.txt`.
+
+## Configure your API key
+
+1. Copy the example file:
+   - macOS/Linux: `cp .env.example .env`
+   - Windows: `Copy-Item .env.example .env`
+2. Open `.env` and set `GEMINI_API_KEY=...` with your key.
+3. Make sure the key is available in your environment when running. crewai/litellm loads `.env` automatically in most setups; if yours doesn't, export it in your shell (`export GEMINI_API_KEY=...`) or add `python-dotenv` with a `load_dotenv()` call to `run_regulatory_agent_crew.py`.
+
+`.env` is gitignored — never commit it.
+
+## Run
+
+```bash
+cd regulatory_agent
+python run_regulatory_agent_crew.py
+```
+
+The agent fetches context from GitHub, analyses the regulations, and writes the result to `regulatory_agent/requirements/compliance_matrix.md`.
+
+> Note: the script fetches its context files from a separate GitHub repo (`draronnax83-cmd/MASS-Concept-Study-Charpentier`). Make sure those files (`Agentic-Engineering-Approach.md`, `Readme.md`, `Team-Responsibilities.md`) exist there before running.
+
+## Working together
+
+We're a small team and work mostly directly on `main`. A few habits keep it smooth:
+
+- **Pull before you start, and again before you push.**
+- **Don't push code that doesn't run.** If a change is big or half-done, make a short-lived branch (`git switch -c my-thing`), finish it, merge it back to `main`.
+- **Never force-push to `main`** (`git push --force`) — it can erase someone else's commits.
+- Keep commits small and messages clear.
+- Branch naming: `feat/...`, `fix/...`, or `<initials>/<topic>`.
+
+## Secrets & hygiene
+
+- Never commit API keys, passwords, or local config. `.env` is gitignored; only `.env.example` is committed.
+- The `.gitignore` excludes virtual envs (`.venv`), `__pycache__`, OS files, and `.env`.
+
+## Repo settings (for the owner / @ElenaLisovaDev)
+
+One-time setup to keep the team safe:
+
+1. **Add collaborators** — Settings → Collaborators → add each teammate with **Write** access.
+2. **Protect `main` from force-push** — Settings → Branches → add a rule for `main` → enable "Do not allow force pushes" and "Do not allow deletations". (No PR requirement — we agreed on direct-to-main for a small team.)
+3. **Visibility** — the repo is currently public. Confirm that's intended given the content; if anything is sensitive, switch to private (Settings → General → Danger Zone).
+4. **Check history for leaked secrets** — scan past commits for API keys before widening access. If a key was ever committed, rotate it and scrub the history.

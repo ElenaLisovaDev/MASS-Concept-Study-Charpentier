@@ -1,2 +1,37 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+build/
+dist/
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+regulatory_agent/.venv/
+
+# ---- Secrets / local config ----
+.env
+.env.local
+secrets/
+
+# ---- OS / editor ----
 .DS_Store
-regulatory_agent/.venv
+Thumbs.db
+desktop.ini
+*.swp
+.idea/
+
+# Keep shared VS Code config, ignore the rest
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# ---- Tool caches ----
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
