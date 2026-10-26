@@ -90,7 +90,7 @@ We're a small team and work mostly directly on `main`. A few habits keep it smoo
 - Never commit API keys, passwords, or local config. `.env` is gitignored; only `.env.example` is committed.
 - The `.gitignore` excludes virtual envs (`.venv`), `__pycache__`, OS files, and `.env`.
 
-## Repo settings (for the owner / @ElenaLisovaDev)
+## Repo settings (for the repo owner)
 
 One-time setup to keep the team safe:
 
