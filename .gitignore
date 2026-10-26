@@ -35,3 +35,6 @@ desktop.ini
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+
+# ---- Kiro (local agent config — keep personal, don't push) ----
+.kiro/

@@ -1,8 +1,32 @@
 # MASS-Concept-Study-Charpentier
 
-Regulatory compliance study for a 24 m autonomous submarine concept, using a [crewai](https://github.com/crewAIInc/crewAI) agent that analyses maritime regulations (IMO MASS Code, COLREGs, SOLAS, EU regulations, NATO standards) and produces a requirements matrix.
+Working repository for the 2026–2027 **Maritime Autonomous Surface System (MASS) Concept Study** at Charpentier Shipyard: a concept-level **Uncrewed Surface Vessel (USV)** developed with a Model-Based Systems Engineering (MBSE) approach, supported by AI agentic-engineering workflows.
 
-> One-line description above is a placeholder — adjust it to match the study's framing.
+The full project definition (vision, challenge, workflow, team responsibilities, timeline) is mirrored in [`project/`](project/) so the whole team works from one place. Start with [`project/Readme.md`](project/Readme.md).
+
+## Repository structure
+
+| Path | Contents |
+|------|----------|
+| `project/` | Project definition: overview, agentic approach, team responsibilities, timeline |
+| `regulatory_agent/` | Regulatory Agent (crewai) — regulation review → compliance matrix. See its README |
+| `docs/regulatory/` | Compliance matrix, gap analysis |
+| `docs/requirements/` | Requirements repository and traceability |
+| `docs/conops/` | Concept of operations (operator workflows, remote supervision) |
+| `docs/architecture/` | System/functional/logical architecture, SysML exports |
+| `docs/verification/` | Verification strategy and matrix |
+| `models/sysml/` | SysML models (SysON) |
+| `models/cad/` | FreeCAD models, assemblies, trade studies |
+| `visualization/` | Blender renders, animations, visual assets |
+| `ui/` | Lovable UI / digital-twin dashboard prototypes |
+| `presentations/` | Check-in and final-demo decks |
+| `reports/` | Technical reports and formal deliverables |
+
+Each folder has a short README describing what goes in it.
+
+### Large files (Git LFS)
+
+Binary deliverables (CAD, Blender, images, Office docs, PDF, video) are tracked with **Git LFS** — see `.gitattributes`. Each teammate must run `git lfs install` once per machine (Git LFS ships with Git for Windows). After that, LFS files are handled transparently on clone/pull/push. Note: GitHub's free LFS quota is limited (1 GB storage, 1 GB/month bandwidth) — keep an eye on usage and avoid committing throwaway renders.
 
 ## Requirements
 
